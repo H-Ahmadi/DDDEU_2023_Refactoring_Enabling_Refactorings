@@ -1,17 +1,30 @@
 ﻿using System.Text;
 using WorldCup.DataAccess;
+using WorldCup.Model;
 
 namespace WorldCup.View;
 
 public class GroupViewService
 {
+    private readonly IConsole _console;
+    public GroupViewService(IConsole console)
+    {
+        _console = console;
+    }
+    public GroupViewService() : this(new SystemConsole()) { }
+
     public void ShowGroup(long groupStageId)
     {
         var groupStage = GroupStageStorage.LoadGroupStage(groupStageId);
 
-        Console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
-        Console.WriteLine("|      Team      |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");
-        Console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
+        ShowGroup(groupStage);
+    }
+
+    public void ShowGroup(GroupStage groupStage)
+    {
+        _console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
+        _console.WriteLine("|      Team      |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");
+        _console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
 
         var tableRows = new Dictionary<string, StageTableViewModel>();
         foreach (var team in groupStage.Teams)
@@ -48,13 +61,11 @@ public class GroupViewService
                 tableRows[team2.Name].Points += 3;
                 tableRows[team2.Name].Win++;
                 tableRows[team1.Name].Lost++;
-
             }
             else if (score2 == score1)
             {
                 tableRows[team2.Name].Points += 1;
                 tableRows[team2.Name].Draw++;
-
             }
         }
 
@@ -73,19 +84,19 @@ public class GroupViewService
 
         foreach (var row in rows)
         {
-            Console.WriteLine("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|", 
-                PadCenter(row.Key, 16), 
+            _console.WriteLine("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|",
+                PadCenter(row.Key, 16),
                 PadCenter(row.Value.GamesPlayed.ToString(), 6),
                 PadCenter(row.Value.Win.ToString(), 6),
                 PadCenter(row.Value.Draw.ToString(), 6),
                 PadCenter(row.Value.Lost.ToString(), 6),
-                PadCenter(row.Value.GoalDifference.ToString(), 6), 
+                PadCenter(row.Value.GoalDifference.ToString(), 6),
                 PadCenter(row.Value.GoalScored.ToString(), 6),
                 PadCenter(row.Value.Points.ToString(), 13)
-                );
-
+            );
         }
-        Console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
+
+        _console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
     }
 
     private static string PadCenter(string text, int newWidth)
