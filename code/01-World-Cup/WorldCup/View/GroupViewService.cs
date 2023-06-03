@@ -56,7 +56,6 @@ public class GroupViewService
                 tableRows[team2.Name].Draw++;
 
             }
-
         }
 
         var rows = tableRows.ToList();
@@ -69,7 +68,7 @@ public class GroupViewService
             else
                 return team2.Value.GoalScored.CompareTo(team1.Value.GoalScored);
 
-            //Other Rules Omitted for simplicity reasons (Like Head-to-Head results and Fair-play Fair Play Points, etc.)
+            //The rest of the rules have been omitted for simplicity (such as head-to-head results and Fair Play Fair Play Points).
         });
 
         foreach (var row in rows)
