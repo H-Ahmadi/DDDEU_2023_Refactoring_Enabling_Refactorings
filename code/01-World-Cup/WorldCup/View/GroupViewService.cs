@@ -24,73 +24,19 @@ public class GroupViewService
         _console.WriteLine("|                Team                |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");
         _console.WriteLine("+------------------------------------+------+------+------+------+------+------+-------------+");
 
-        var tableRows = new Dictionary<string, StageTableViewModel>();
-        foreach (var team in groupStage.Teams)
-            tableRows.Add(team.Name, new StageTableViewModel());
-
-        foreach (var game in groupStage.Games)
-        {
-            var team1 = game.Team1;
-            var team2 = game.Team2;
-            var score1 = game.Score1.Value;
-            var score2 = game.Score2.Value;
-
-            tableRows[team1.Name].GamesPlayed++;
-            tableRows[team2.Name].GamesPlayed++;
-
-            tableRows[team1.Name].GoalScored += score1;
-            tableRows[team1.Name].GoalDifference += score1 - score2;
-            if (score1 > score2)
-            {
-                tableRows[team1.Name].Points += 3;
-                tableRows[team1.Name].Win++;
-                tableRows[team2.Name].Lost++;
-            }
-            else if (score1 == score2)
-            {
-                tableRows[team1.Name].Points += 1;
-                tableRows[team1.Name].Draw++;
-            }
-
-            tableRows[team2.Name].GoalScored += score2;
-            tableRows[team2.Name].GoalDifference += score2 - score1;
-            if (score2 > score1)
-            {
-                tableRows[team2.Name].Points += 3;
-                tableRows[team2.Name].Win++;
-                tableRows[team1.Name].Lost++;
-            }
-            else if (score2 == score1)
-            {
-                tableRows[team2.Name].Points += 1;
-                tableRows[team2.Name].Draw++;
-            }
-        }
-
-        var rows = tableRows.ToList();
-        rows.Sort((team1, team2) =>
-        {
-            if (team1.Value.Points != team2.Value.Points)
-                return team2.Value.Points.CompareTo(team1.Value.Points);
-            else if (team1.Value.GoalDifference != team2.Value.GoalDifference)
-                return team2.Value.GoalDifference.CompareTo(team1.Value.GoalDifference);
-            else
-                return team2.Value.GoalScored.CompareTo(team1.Value.GoalScored);
-
-            //The rest of the rules have been omitted for simplicity (such as head-to-head results and Fair Play Fair Play Points).
-        });
+        var rows = groupStage.GenerateTable();
 
         foreach (var row in rows)
         {
             _console.WriteLine("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|",
-                PadCenter(row.Key, 36),
-                PadCenter(row.Value.GamesPlayed.ToString(), 6),
-                PadCenter(row.Value.Win.ToString(), 6),
-                PadCenter(row.Value.Draw.ToString(), 6),
-                PadCenter(row.Value.Lost.ToString(), 6),
-                PadCenter(row.Value.GoalDifference.ToString(), 6),
-                PadCenter(row.Value.GoalScored.ToString(), 6),
-                PadCenter(row.Value.Points.ToString(), 13)
+                PadCenter(row.TeamName, 36),
+                PadCenter(row.GamesPlayed.ToString(), 6),
+                PadCenter(row.Win.ToString(), 6),
+                PadCenter(row.Draw.ToString(), 6),
+                PadCenter(row.Lost.ToString(), 6),
+                PadCenter(row.GoalDifference.ToString(), 6),
+                PadCenter(row.GoalScored.ToString(), 6),
+                PadCenter(row.Points.ToString(), 13)
             );
         }
 
