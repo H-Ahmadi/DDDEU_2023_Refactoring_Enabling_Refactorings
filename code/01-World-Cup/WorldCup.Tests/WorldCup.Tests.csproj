@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,7 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="faker.net" Version="2.0.154" />
+    <PackageReference Include="fluentassertions" Version="6.11.0" />
+    <PackageReference Include="fscheck" Version="2.16.5" />
+    <PackageReference Include="fscheck.xunit" Version="2.16.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="nbuilder" Version="6.1.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,6 +28,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldCup\WorldCup.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestDoubles\" />
   </ItemGroup>
 
 </Project>

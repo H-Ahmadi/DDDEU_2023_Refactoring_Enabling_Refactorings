@@ -12,19 +12,17 @@ public class GroupViewService
         _console = console;
     }
     public GroupViewService() : this(new SystemConsole()) { }
-
     public void ShowGroup(long groupStageId)
     {
         var groupStage = GroupStageStorage.LoadGroupStage(groupStageId);
 
         ShowGroup(groupStage);
     }
-
     public void ShowGroup(GroupStage groupStage)
     {
-        _console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
-        _console.WriteLine("|      Team      |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");
-        _console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
+        _console.WriteLine("+------------------------------------+------+------+------+------+------+------+-------------+");
+        _console.WriteLine("|                Team                |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");
+        _console.WriteLine("+------------------------------------+------+------+------+------+------+------+-------------+");
 
         var tableRows = new Dictionary<string, StageTableViewModel>();
         foreach (var team in groupStage.Teams)
@@ -85,7 +83,7 @@ public class GroupViewService
         foreach (var row in rows)
         {
             _console.WriteLine("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|",
-                PadCenter(row.Key, 16),
+                PadCenter(row.Key, 36),
                 PadCenter(row.Value.GamesPlayed.ToString(), 6),
                 PadCenter(row.Value.Win.ToString(), 6),
                 PadCenter(row.Value.Draw.ToString(), 6),
@@ -96,7 +94,13 @@ public class GroupViewService
             );
         }
 
-        _console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
+        _console.WriteLine("+------------------------------------+------+------+------+------+------+------+-------------+");
+    }
+
+    // This method serves as a placeholder for the refactored code, currently calling the old code
+    public void RenderGroup(GroupStage groupStage)
+    {
+        ShowGroup(groupStage);
     }
 
     private static string PadCenter(string text, int newWidth)
@@ -104,7 +108,8 @@ public class GroupViewService
         const char filler = ' ';
         var length = text.Length;
         var charactersToPad = newWidth - length;
-        if (charactersToPad < 0) throw new ArgumentException("New width must be greater than string length.", "newWidth");
+        if (charactersToPad < 0) 
+            throw new ArgumentException("New width must be greater than string length.", "newWidth");
         var padLeft = charactersToPad / 2 + charactersToPad % 2;
         //add a space to the left if the string is an odd number
         var padRight = charactersToPad / 2;

@@ -5,7 +5,6 @@ public interface IConsole
     void WriteLine(string message);
     void WriteLine(string format, params object[] parameters);
 }
-
 public class SystemConsole : IConsole
 {
     public void WriteLine(string message)
@@ -17,4 +16,3 @@ public class SystemConsole : IConsole
         Console.WriteLine(format, parameters);
     }
 }
-
