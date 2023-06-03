@@ -5,7 +5,7 @@ namespace WorldCup.View;
 
 public class GroupViewService
 {
-    public static void DrawGroup(long groupStageId)
+    public void ShowGroup(long groupStageId)
     {
         var groupStage = GroupStageStorage.LoadGroupStage(groupStageId);
 
