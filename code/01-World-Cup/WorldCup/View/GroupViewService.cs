@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using WorldCup.Services;
+using WorldCup.DataAccess;
 
 namespace WorldCup.View;
 
@@ -7,7 +7,7 @@ public class GroupViewService
 {
     public static void DrawGroup(long groupStageId)
     {
-        var groupStage = DataAccessService.LoadStage(groupStageId);
+        var groupStage = GroupStageStorage.LoadGroupStage(groupStageId);
 
         Console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
         Console.WriteLine("|      Team      |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");

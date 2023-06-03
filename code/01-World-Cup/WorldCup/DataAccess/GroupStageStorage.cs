@@ -1,10 +1,10 @@
 ﻿using WorldCup.Model;
 
-namespace WorldCup.Services;
+namespace WorldCup.DataAccess;
 
-public static class DataAccessService
+public static class GroupStageStorage
 {
-    public static GroupStage LoadStage(long id)
+    public static GroupStage LoadGroupStage(long id)
     {
         // This method retrieves a group stage from the database based on the provided identifier
 
