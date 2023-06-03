@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ApprovalTests" Version="5.8.0" />
     <PackageReference Include="faker.net" Version="2.0.154" />
     <PackageReference Include="fluentassertions" Version="6.11.0" />
     <PackageReference Include="fscheck" Version="2.16.5" />
