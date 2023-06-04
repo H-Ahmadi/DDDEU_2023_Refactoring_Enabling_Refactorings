@@ -3,7 +3,7 @@ using WorldCup.DataAccess;
 
 namespace WorldCup.View;
 
-public class GroupViewService
+public class GroupStageView
 {
     public void ShowGroup(long groupStageId)
     {

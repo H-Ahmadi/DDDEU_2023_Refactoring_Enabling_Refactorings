@@ -3,7 +3,7 @@ using WorldCup.DataAccess;
 using WorldCup.Model;
 using WorldCup.Model.Enums;
 
-namespace WorldCup.View;
+namespace WorldCup.Services;
 
 public class FifaRankingService
 {

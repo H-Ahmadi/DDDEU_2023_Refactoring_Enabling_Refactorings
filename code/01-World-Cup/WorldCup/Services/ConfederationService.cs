@@ -1,7 +1,7 @@
 ﻿using WorldCup.Core;
 using WorldCup.Model.Enums;
 
-namespace WorldCup.View;
+namespace WorldCup.Services;
 
 public static class ConfederationService
 {
