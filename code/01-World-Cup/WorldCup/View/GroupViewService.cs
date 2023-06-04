@@ -7,7 +7,7 @@ public class GroupViewService
 {
     public void ShowGroup(long groupStageId)
     {
-        var groupStage = GroupStageStorage.LoadGroupStage(groupStageId);
+        var groupStage = GroupStageDataAccess.LoadGroupStage(groupStageId);
 
         Console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
         Console.WriteLine("|      Team      |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");
@@ -21,8 +21,8 @@ public class GroupViewService
         {
             var team1 = game.Team1;
             var team2 = game.Team2;
-            var score1 = game.Score1.Value;
-            var score2 = game.Score2.Value;
+            var score1 = game.Score1;
+            var score2 = game.Score2;
 
             tableRows[team1.Id].GamesPlayed++;
             tableRows[team2.Id].GamesPlayed++;
