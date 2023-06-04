@@ -13,9 +13,9 @@ public class GroupViewService
         Console.WriteLine("|      Team      |   P  |   W  |   D  |   L  |  GD  |  GS  |   Points    |");
         Console.WriteLine("+----------------+------+------+------+------+------+------+-------------+");
 
-        var tableRows = new Dictionary<string, StageTableViewModel>();
+        var tableRows = new Dictionary<long, StageTableViewModel>();
         foreach (var team in groupStage.Teams)
-            tableRows.Add(team.Name, new StageTableViewModel());
+            tableRows.Add(team.Id, new StageTableViewModel(){ TeamName = team.Name});
 
         foreach (var game in groupStage.Games)
         {
@@ -24,36 +24,36 @@ public class GroupViewService
             var score1 = game.Score1.Value;
             var score2 = game.Score2.Value;
 
-            tableRows[team1.Name].GamesPlayed++;
-            tableRows[team2.Name].GamesPlayed++;
+            tableRows[team1.Id].GamesPlayed++;
+            tableRows[team2.Id].GamesPlayed++;
 
-            tableRows[team1.Name].GoalScored += score1;
-            tableRows[team1.Name].GoalDifference += score1 - score2;
+            tableRows[team1.Id].GoalScored += score1;
+            tableRows[team1.Id].GoalDifference += score1 - score2;
             if (score1 > score2)
             {
-                tableRows[team1.Name].Points += 3;
-                tableRows[team1.Name].Win++;
-                tableRows[team2.Name].Lost++;
+                tableRows[team1.Id].Points += 3;
+                tableRows[team1.Id].Win++;
+                tableRows[team2.Id].Lost++;
             }
             else if (score1 == score2)
             {
-                tableRows[team1.Name].Points += 1;
-                tableRows[team1.Name].Draw++;
+                tableRows[team1.Id].Points += 1;
+                tableRows[team1.Id].Draw++;
             }
 
-            tableRows[team2.Name].GoalScored += score2;
-            tableRows[team2.Name].GoalDifference += score2 - score1;
+            tableRows[team2.Id].GoalScored += score2;
+            tableRows[team2.Id].GoalDifference += score2 - score1;
             if (score2 > score1)
             {
-                tableRows[team2.Name].Points += 3;
-                tableRows[team2.Name].Win++;
-                tableRows[team1.Name].Lost++;
+                tableRows[team2.Id].Points += 3;
+                tableRows[team2.Id].Win++;
+                tableRows[team1.Id].Lost++;
 
             }
             else if (score2 == score1)
             {
-                tableRows[team2.Name].Points += 1;
-                tableRows[team2.Name].Draw++;
+                tableRows[team2.Id].Points += 1;
+                tableRows[team2.Id].Draw++;
 
             }
         }
@@ -74,7 +74,7 @@ public class GroupViewService
         foreach (var row in rows)
         {
             Console.WriteLine("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|", 
-                PadCenter(row.Key, 16), 
+                PadCenter(row.Value.TeamName, 16), 
                 PadCenter(row.Value.GamesPlayed.ToString(), 6),
                 PadCenter(row.Value.Win.ToString(), 6),
                 PadCenter(row.Value.Draw.ToString(), 6),
@@ -107,6 +107,7 @@ public class GroupViewService
 
     public class StageTableViewModel
     {
+        public string TeamName { get; set; }
         public int GamesPlayed { get; set; }
         public int Win { get; set; }
         public int Draw { get; set; }
