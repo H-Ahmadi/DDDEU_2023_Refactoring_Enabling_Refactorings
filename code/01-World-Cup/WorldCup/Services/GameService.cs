@@ -7,7 +7,7 @@ namespace WorldCup.Services;
 
 public static class GameService
 {
-    public static void AddGame(AddGameDto dto)
+    public static Guid AddGame(AddGameDto dto)
     {
         //Update the group
         var group = GroupStageDataAccess.LoadGroupStage(dto.GroupId);
@@ -23,6 +23,8 @@ public static class GameService
         //Update FIFA ranking
         var rankingService = new FifaRankingService();
         rankingService.UpdateRankingForTeams(game, Stages.Group);
+
+        return game.Id;
     }
 }
 
