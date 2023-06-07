@@ -1,4 +1,4 @@
-# Temporal Patterns Workshop
+# Refactoring-Enabling Refactorings Workshop
 This is the repository for **Refactoring-Enabling Refactorings** hands-on lab at DDD Europe 2023. This repository contains all the necessary materials and code examples to enhance your learning experience during the workshop.
 
 ⚠️The repository is empty right now. The content will be added soon.
